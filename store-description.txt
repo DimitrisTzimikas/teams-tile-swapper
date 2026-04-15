@@ -1,0 +1,23 @@
+Teams Tile Swapper
+
+Replace the default Microsoft Teams participant avatars with a custom image, random cats, or random dogs. Works instantly in the Teams web client.
+
+Meetings with cameras off can feel a bit flat. Teams Tile Swapper brings a little fun — or a little personalization — to every camera-off tile you see. Each participant can get a unique image, so a 6-person meeting turns into 6 different cats, dogs, or whatever you upload.
+
+Three modes:
+- Custom: upload any image, click the preview to pick the focal point
+- Cats: random cat for every participant, fresh each meeting
+- Dogs: random dog for every participant, fresh each meeting
+
+Features:
+- Unique image per participant in Cats and Dogs modes
+- Focal point picker for custom images
+- Fill or Fit sizing, with a blurred background fill so nothing looks letterboxed
+- Leaves the active shared screen and live video untouched
+- Clean, modern popup UI with light and dark modes
+- No account, no sign-in, everything runs locally
+
+Privacy:
+No analytics, no tracking. Your custom image is stored only in your own browser. Cat and dog images are fetched from cataas.com and dog.ceo (the standard public APIs for those services) and only when you have those modes selected. The extension does not read meeting audio, video, chat, or participant data.
+
+Note: This extension only affects what you see in your own browser. Other meeting participants see the normal Teams interface. This is an independent project and is not affiliated with or endorsed by Microsoft.

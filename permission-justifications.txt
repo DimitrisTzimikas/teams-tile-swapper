@@ -1,0 +1,34 @@
+Chrome Web Store Permission Justifications
+==========================================
+
+Use these when filling out the Chrome Web Store submission form.
+Each permission has a "Justification" field you need to fill in during review.
+
+---
+
+Permission: storage
+Justification:
+The extension uses chrome.storage.local to save the user's mode selection (Custom, Cats, or Dogs), their uploaded custom image (downscaled), their focal point and fit preferences, and an enabled/disabled flag. These settings need to persist across browser sessions. No data is synced or shared externally.
+
+---
+
+Host permission: https://teams.cloud.microsoft/*, https://teams.microsoft.com/*, https://teams.live.com/*
+Justification:
+The extension's content script runs only on Microsoft Teams web client URLs to apply the tile replacement overlay. It identifies participant video tile elements in the page and adds a CSS overlay containing the chosen image. The content script does not read audio, video, chat, meeting metadata, or participant lists, and does not transmit any page content.
+
+---
+
+Host permission: https://cataas.com/*
+Justification:
+When the user selects "Cats" mode, the extension fetches random cat images from cataas.com (Cat as a Service, a public image API) to use as the tile overlay. Requests are made only while Cats mode is active and contain no identifying information beyond what any browser sends when loading an image. No requests are made in other modes.
+
+---
+
+Host permission: https://dog.ceo/*, https://images.dog.ceo/*
+Justification:
+When the user selects "Dogs" mode, the extension calls the public Dog CEO API (dog.ceo) to get a random dog image URL, then fetches the image from its CDN (images.dog.ceo). Requests are made only while Dogs mode is active and contain no identifying information beyond what any browser sends when loading an image. No requests are made in other modes.
+
+---
+
+Remote code / external network requests:
+The extension makes HTTPS requests to cataas.com and dog.ceo only when the user explicitly selects Cats or Dogs mode. These requests fetch image content that is displayed as a tile overlay. No other external network requests are made. In Custom mode, no external requests are made at all.

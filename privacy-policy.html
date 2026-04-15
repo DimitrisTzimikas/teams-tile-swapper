@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy Policy - Teams Tile Swapper</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      color: #1a1a2e;
+      line-height: 1.7;
+      background: #f5f5ff;
+      min-height: 100vh;
+    }
+    header {
+      background: linear-gradient(135deg, #6264a7, #4b4d94);
+      padding: 48px 20px 40px;
+      text-align: center;
+      color: #fff;
+    }
+    header .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      text-decoration: none;
+      color: #fff;
+    }
+    header .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+    header .logo-text {
+      font-size: 20px;
+      font-weight: 600;
+    }
+    header h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    header p {
+      font-size: 15px;
+      opacity: 0.85;
+    }
+    main {
+      max-width: 720px;
+      margin: -24px auto 0;
+      padding: 0 20px 60px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 40px 36px;
+      box-shadow: 0 2px 12px rgba(98,100,167,0.08);
+    }
+    h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #4b4d94;
+      margin-top: 32px;
+      margin-bottom: 12px;
+      padding-bottom: 6px;
+      border-bottom: 2px solid #ede9fe;
+    }
+    h2:first-child { margin-top: 0; }
+    p { margin-bottom: 12px; font-size: 15px; color: #374151; }
+    ul {
+      padding-left: 0;
+      list-style: none;
+      margin-bottom: 12px;
+    }
+    li {
+      position: relative;
+      padding-left: 24px;
+      margin-bottom: 8px;
+      font-size: 15px;
+      color: #374151;
+    }
+    li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 8px;
+      height: 8px;
+      background: #6264a7;
+      border-radius: 50%;
+    }
+    strong { color: #1a1a2e; }
+    a { color: #6264a7; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .highlight {
+      background: #f0fdf4;
+      border-left: 4px solid #22c55e;
+      padding: 14px 18px;
+      border-radius: 0 8px 8px 0;
+      margin: 16px 0;
+      font-size: 15px;
+      color: #166534;
+    }
+    footer {
+      text-align: center;
+      padding: 24px 20px;
+      font-size: 13px;
+      color: #9ca3af;
+    }
+    footer a { color: #6264a7; }
+    @media (max-width: 600px) {
+      header { padding: 32px 16px 28px; }
+      header h1 { font-size: 24px; }
+      .card { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <div class="logo-icon">🎭</div>
+      <span class="logo-text">Teams Tile Swapper</span>
+    </div>
+    <h1>Privacy Policy</h1>
+    <p>Last updated: April 15, 2026</p>
+  </header>
+
+  <main>
+    <div class="card">
+
+      <h2>Overview</h2>
+      <p>Teams Tile Swapper is a Chrome extension that replaces Microsoft Teams participant tiles with a custom image, random cats, or random dogs. This policy explains what data the extension accesses and how it is handled.</p>
+
+      <div class="highlight">
+        This extension does <strong>not</strong> collect, store, or transmit any personal data. No analytics, no cookies, no tracking.
+      </div>
+
+      <h2>Data Collection</h2>
+      <ul>
+        <li>No analytics or tracking of any kind</li>
+        <li>No cookies or user accounts</li>
+        <li>No access to meeting audio, video, chat, or participant information</li>
+        <li>No personal information collection</li>
+      </ul>
+
+      <h2>Data Processing</h2>
+      <p>The extension operates entirely on your device. The following is the only data that leaves your browser:</p>
+      <ul>
+        <li><strong>Cat mode:</strong> The extension requests images from <a href="https://cataas.com/" target="_blank" rel="noopener">cataas.com</a> only while Cats mode is active. These requests contain no personal information.</li>
+        <li><strong>Dog mode:</strong> The extension requests images from <a href="https://dog.ceo/dog-api/" target="_blank" rel="noopener">dog.ceo</a> only while Dogs mode is active. These requests contain no personal information.</li>
+        <li><strong>Custom mode:</strong> No external requests. Your uploaded image never leaves your browser.</li>
+      </ul>
+
+      <h2>Local Storage</h2>
+      <p>The extension uses Chrome's local storage to remember your settings on your device:</p>
+      <ul>
+        <li>Current mode (Custom, Cats, or Dogs)</li>
+        <li>Your uploaded custom image (downscaled, stored as a local data URL)</li>
+        <li>Your focal point and fit preferences</li>
+        <li>Enabled/disabled state</li>
+      </ul>
+      <p>This data is never synced, shared, or transmitted to any server.</p>
+
+      <h2>Meeting Content</h2>
+      <p>The extension does <strong>not</strong> read, record, or transmit any meeting content. It does not access audio, video streams, chat messages, shared screens, or participant lists. It only modifies the visual appearance of participant tile DOM elements in the Teams web page.</p>
+
+      <h2>Permissions</h2>
+      <ul>
+        <li><strong>Storage</strong> &mdash; Saves your preferences locally in your browser.</li>
+        <li><strong>Host access to teams.cloud.microsoft, teams.microsoft.com, teams.live.com</strong> &mdash; The content script runs on the Teams web client to apply the tile overlay.</li>
+        <li><strong>Host access to cataas.com, dog.ceo, images.dog.ceo</strong> &mdash; Fetches random cat and dog images only when those modes are selected.</li>
+      </ul>
+
+      <h2>Third-Party Services</h2>
+      <p>When you select Cats or Dogs mode, images are fetched from:</p>
+      <ul>
+        <li><a href="https://cataas.com/" target="_blank" rel="noopener">Cat as a Service (cataas.com)</a></li>
+        <li><a href="https://dog.ceo/dog-api/" target="_blank" rel="noopener">Dog CEO API (dog.ceo)</a></li>
+      </ul>
+      <p>These services may log standard request metadata (such as IP address) as part of normal web hosting. The extension sends no identifying information beyond what any browser sends when loading an image.</p>
+
+      <h2>Data Retention</h2>
+      <p>No data is retained by this extension beyond the settings stored in Chrome's local storage on your own device. Uninstalling the extension removes all stored data.</p>
+
+      <h2>Changes to This Policy</h2>
+      <p>If this policy is updated, the changes will be reflected on this page with an updated date.</p>
+
+      <h2>Contact</h2>
+      <p>If you have questions about this privacy policy, please open an issue on the <a href="https://github.com/DimitrisTzimikas/teams-tile-swapper" target="_blank" rel="noopener">GitHub repository</a>.</p>
+
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2026 Teams Tile Swapper &middot; <a href="https://github.com/DimitrisTzimikas/teams-tile-swapper">GitHub</a> &middot; <a href="terms.html">Terms</a>
+  </footer>
+</body>
+</html>

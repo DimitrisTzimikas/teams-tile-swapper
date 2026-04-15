@@ -1,30 +1,41 @@
 # Teams Tile Swapper
 
-Chrome extension that overlays a custom image on Microsoft Teams participant tiles in the web client (`teams.cloud.microsoft`, `teams.microsoft.com`, `teams.live.com`).
-
-## Install (unpacked)
-
-1. Open `chrome://extensions`
-2. Toggle **Developer mode** on (top-right)
-3. Click **Load unpacked** and pick this folder (`msteamsfun`)
-4. Click the extension icon → upload your custom image
-
-## Options
-
-- **Enabled** — master toggle.
-- **Replace even when video is on** — if off, only tiles with the camera off get the overlay.
-- **Custom image** — uploaded image is downscaled to 1024px max and stored in `chrome.storage.local`.
+A Chrome extension that replaces Microsoft Teams participant tiles (cameras off) with a custom image, random cats, or random dogs. Works in the Teams web client.
 
 ## How it works
 
-A content script runs on Teams pages, scans the DOM for participant tiles, and appends a `<div>` overlay with your image as `background-image`. A `MutationObserver` plus a 1.5s interval keep it applied as the layout reshuffles during a meeting.
+1. Install the extension from the Chrome Web Store
+2. Open Microsoft Teams in your browser
+3. Click the extension icon and pick a mode: **Custom**, **Cats**, or **Dogs**
+4. Join a meeting. Every camera-off tile shows your chosen image instead of the default avatar
 
-## Known limitations
+Each participant gets a unique random image when using Cats or Dogs mode.
 
-- Teams class names are hashed and change between releases. The selectors in `content.js` (`TILE_SELECTORS`) target `data-tid` attributes and class-name substrings, but you may need to tweak them if Microsoft ships a layout change.
-- Only works in the browser. The Teams desktop app is a separate Electron-ish client and does not load Chrome extensions.
-- If a tile is a `<canvas>` element (some Teams variants render remote video to canvas), the "video active" check may miss it — turn on **Replace even when video is on** as a workaround.
+## Features
 
-## Tweaking selectors
+- Three modes: upload your own image, random cats 🐱, or random dogs 🐶
+- Unique image per participant when using random modes
+- Pick a focal point for custom images so cropping favors the part you care about
+- Fill or Fit sizing — Fit adds a blurred background fill so the tile always looks polished
+- Leaves the active shared screen and live video untouched
+- No account, no sign-in, everything runs locally in your browser
 
-Open DevTools in a Teams meeting, right-click a participant tile → Inspect, find the outer wrapper (look for `data-tid="..."` or a class containing `participantTile`/`videoTile`), and add that selector to `TILE_SELECTORS` in `content.js`.
+## Setup
+
+1. Install the extension from the Chrome Web Store
+2. Open [Microsoft Teams](https://teams.cloud.microsoft/) and join a meeting
+3. Click the extension icon in the toolbar
+4. Choose your mode and (for Custom) upload an image
+5. The participant tiles update automatically
+
+## Privacy
+
+- No analytics, no tracking, no data collection
+- Your custom image is stored locally in your browser only
+- Cat and Dog images are fetched from [cataas.com](https://cataas.com/) and [dog.ceo](https://dog.ceo/dog-api/) only when you select those modes
+- Tile replacement runs entirely on your device
+- See the full [Privacy Policy](privacy-policy.html)
+
+## License
+
+MIT
