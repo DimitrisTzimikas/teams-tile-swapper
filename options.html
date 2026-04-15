@@ -4,71 +4,413 @@
     <meta charset="utf-8" />
     <title>Teams Tile Swapper</title>
     <style>
+      :root {
+        --bg: #ffffff;
+        --surface: #f7f7f9;
+        --text: #1f1f23;
+        --muted: #6b6b73;
+        --border: #e4e4e9;
+        --accent: #6264a7;
+        --accent-hover: #5154a3;
+        --accent-weak: #eceefa;
+        --danger: #c4314b;
+        --radius: 10px;
+        --shadow: 0 1px 2px rgba(0, 0, 0, 0.04),
+          0 4px 12px rgba(0, 0, 0, 0.06);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #1f1f23;
+          --surface: #2a2a30;
+          --text: #ececf1;
+          --muted: #a0a0ab;
+          --border: #3a3a42;
+          --accent: #8b8cd6;
+          --accent-hover: #a0a1df;
+          --accent-weak: #34354a;
+          --danger: #e67089;
+          --shadow: 0 1px 2px rgba(0, 0, 0, 0.3),
+            0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
       body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        margin: 24px;
-        max-width: 480px;
-        color: #1f1f1f;
+        margin: 0;
+        padding: 0;
       }
-      h1 {
-        font-size: 18px;
-        margin: 0 0 16px;
+
+      body {
+        width: 380px;
+        min-height: 480px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter,
+          system-ui, sans-serif;
+        font-size: 14px;
+        line-height: 1.45;
+        color: var(--text);
+        background: var(--bg);
       }
-      label {
-        display: block;
-        font-size: 13px;
-        margin: 12px 0 6px;
+
+      .container {
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
       }
+
+      header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      header .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--accent);
+      }
+
+      header h1 {
+        font-size: 15px;
+        font-weight: 600;
+        margin: 0;
+      }
+
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 12px;
+      }
+
       .row {
         display: flex;
         align-items: center;
-        gap: 8px;
-        margin: 10px 0;
+        justify-content: space-between;
+        gap: 10px;
       }
-      .preview {
-        margin-top: 12px;
-        width: 100%;
-        aspect-ratio: 16 / 9;
-        background: #eee center/cover no-repeat;
-        border-radius: 6px;
-        border: 1px solid #ddd;
-      }
-      button {
-        padding: 6px 12px;
+
+      .row-label {
         font-size: 13px;
+        font-weight: 500;
+      }
+
+      .row-hint {
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      /* Toggle switch */
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 36px;
+        height: 20px;
+        flex-shrink: 0;
+      }
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      .slider {
+        position: absolute;
+        inset: 0;
+        background: var(--border);
+        border-radius: 999px;
+        transition: background 0.15s;
         cursor: pointer;
       }
-      .hint {
-        font-size: 12px;
-        color: #666;
-        margin-top: 4px;
+      .slider::before {
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 16px;
+        height: 16px;
+        background: white;
+        border-radius: 50%;
+        transition: transform 0.15s;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
       }
+      .switch input:checked + .slider {
+        background: var(--accent);
+      }
+      .switch input:checked + .slider::before {
+        transform: translateX(16px);
+      }
+
+      /* Segmented control */
+      .segmented {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 3px;
+        gap: 2px;
+      }
+      .segmented input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
+      .segmented label {
+        text-align: center;
+        padding: 7px 4px;
+        font-size: 13px;
+        font-weight: 500;
+        border-radius: 6px;
+        cursor: pointer;
+        color: var(--muted);
+        transition: background 0.12s, color 0.12s;
+        user-select: none;
+      }
+      .segmented label:hover {
+        color: var(--text);
+      }
+      .segmented input:checked + label {
+        background: var(--accent);
+        color: white;
+      }
+
+      .section-title {
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--muted);
+        margin: 0 0 8px;
+      }
+
+      /* File input */
+      .file-row {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      input[type="file"] {
+        display: none;
+      }
+      .file-btn {
+        flex: 1;
+        padding: 8px 10px;
+        border: 1px dashed var(--border);
+        border-radius: 8px;
+        background: var(--bg);
+        color: var(--muted);
+        cursor: pointer;
+        font-size: 12px;
+        text-align: center;
+        transition: border-color 0.15s, color 0.15s;
+      }
+      .file-btn:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      /* Preview */
+      .preview {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background: var(--border);
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        position: relative;
+        overflow: hidden;
+      }
+      .preview-blur {
+        position: absolute;
+        inset: -8%;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        filter: blur(20px) saturate(1.15);
+        transform: scale(1.15);
+      }
+      .preview-main {
+        position: absolute;
+        inset: 0;
+        background-repeat: no-repeat;
+      }
+      .preview.custom {
+        cursor: crosshair;
+      }
+      .focus-dot {
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: white;
+        border: 2px solid var(--accent);
+        box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.35);
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        transition: left 0.1s, top 0.1s;
+      }
+      .preview:not(.custom) .focus-dot {
+        display: none;
+      }
+
+      .preview.loading::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.15),
+          transparent
+        );
+        animation: shimmer 1.2s infinite;
+      }
+      @keyframes shimmer {
+        0% {
+          transform: translateX(-100%);
+        }
+        100% {
+          transform: translateX(100%);
+        }
+      }
+
+      /* Buttons */
+      .actions {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      button {
+        padding: 7px 12px;
+        font-size: 12px;
+        font-weight: 500;
+        border-radius: 7px;
+        border: 1px solid var(--border);
+        background: var(--bg);
+        color: var(--text);
+        cursor: pointer;
+        transition: background 0.12s, border-color 0.12s;
+        font-family: inherit;
+      }
+      button:hover {
+        background: var(--surface);
+        border-color: var(--accent);
+      }
+      button.primary {
+        background: var(--accent);
+        color: white;
+        border-color: var(--accent);
+      }
+      button.primary:hover {
+        background: var(--accent-hover);
+        border-color: var(--accent-hover);
+      }
+      button.danger:hover {
+        color: var(--danger);
+        border-color: var(--danger);
+      }
+
       .status {
         font-size: 12px;
-        color: #0a7a0a;
-        margin-left: 8px;
+        color: var(--accent);
+        margin-left: auto;
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .status.show {
+        opacity: 1;
+      }
+
+      .hidden {
+        display: none !important;
       }
     </style>
   </head>
   <body>
-    <h1>Teams Tile Swapper</h1>
+    <div class="container">
+      <header>
+        <span class="dot"></span>
+        <h1>Teams Tile Swapper</h1>
+      </header>
 
-    <div class="row">
-      <input type="checkbox" id="enabled" />
-      <label for="enabled" style="margin: 0">Enabled</label>
-    </div>
+      <div class="card">
+        <div class="row">
+          <div>
+            <div class="row-label">Enabled</div>
+            <div class="row-hint">Replace participant tiles</div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="enabled" />
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
 
-    <label for="file">Custom image</label>
-    <input type="file" id="file" accept="image/*" />
-    <div class="hint">
-      Stored locally in your browser. Large images are downscaled.
-    </div>
+      <div class="card">
+        <p class="section-title">Image source</p>
+        <div class="segmented">
+          <input type="radio" id="mode-custom" name="mode" value="custom" />
+          <label for="mode-custom">Custom</label>
+          <input type="radio" id="mode-cats" name="mode" value="cats" />
+          <label for="mode-cats">Cats 🐱</label>
+          <input type="radio" id="mode-dogs" name="mode" value="dogs" />
+          <label for="mode-dogs">Dogs 🐶</label>
+        </div>
 
-    <div class="preview" id="preview"></div>
+        <div id="custom-section" style="margin-top: 12px">
+          <div class="file-row">
+            <label for="file" class="file-btn" id="file-label"
+              >Choose image…</label
+            >
+            <input type="file" id="file" accept="image/*" />
+          </div>
+          <div class="row-hint" style="margin-top: 6px">
+            Stored locally. Large images are downscaled.
+          </div>
+        </div>
+      </div>
 
-    <div class="row">
-      <button id="clear">Remove image</button>
-      <span class="status" id="status"></span>
+      <div>
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+          "
+        >
+          <p class="section-title" style="margin: 0">Preview</p>
+          <div
+            id="fit-controls"
+            class="segmented"
+            style="width: 160px; grid-template-columns: 1fr 1fr"
+          >
+            <input type="radio" id="fit-cover" name="fit" value="cover" />
+            <label for="fit-cover">Fill</label>
+            <input type="radio" id="fit-contain" name="fit" value="contain" />
+            <label for="fit-contain">Fit</label>
+          </div>
+        </div>
+        <div class="preview" id="preview">
+          <div class="preview-blur" id="preview-blur"></div>
+          <div class="preview-main" id="preview-main"></div>
+          <div class="focus-dot" id="focus-dot"></div>
+        </div>
+        <div class="row-hint hidden" id="focus-hint" style="margin-top: 6px">
+          Click the preview to set which part stays centered.
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="refresh" class="primary hidden">Shuffle 🎲</button>
+        <button id="clear" class="danger hidden">Remove image</button>
+        <span class="status" id="status"></span>
+      </div>
     </div>
 
     <script src="options.js"></script>

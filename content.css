@@ -2,11 +2,27 @@
   position: absolute;
   inset: 0;
   z-index: 50;
+  pointer-events: none;
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+.tts-blur {
+  position: absolute;
+  inset: -8%;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  pointer-events: none;
-  border-radius: inherit;
+  filter: blur(24px) saturate(1.15);
+  transform: scale(1.15);
+}
+
+.tts-main {
+  position: absolute;
+  inset: 0;
+  background-size: var(--tts-bg-size, cover);
+  background-position: var(--tts-bg-position, center);
+  background-repeat: no-repeat;
 }
 
 .tts-host {
