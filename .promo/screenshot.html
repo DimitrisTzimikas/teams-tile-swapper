@@ -1,0 +1,235 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1280px; height: 800px; overflow: hidden; }
+  body {
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: #141414;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+  }
+  .titlebar {
+    height: 48px;
+    background: #0a0a0a;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    gap: 12px;
+    font-size: 13px;
+    color: #ccc;
+  }
+  .titlebar .logo {
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(135deg, #6264a7, #4b4d94);
+    border-radius: 5px;
+  }
+  .main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 68px 1fr;
+  }
+  .sidebar {
+    background: #0f0f0f;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 16px;
+    gap: 14px;
+  }
+  .nav-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: #1f1f1f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #a0a0ab;
+  }
+  .nav-icon.active { background: #6264a7; color: #fff; }
+  .stage {
+    background: radial-gradient(at 30% 20%, rgba(98,100,167,0.2), transparent 50%),
+                radial-gradient(at 70% 80%, rgba(75,77,148,0.2), transparent 50%),
+                #141414;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .tiles-row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+    height: 180px;
+  }
+  .tile {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+  }
+  .tile .blur {
+    position: absolute;
+    inset: -8%;
+    background-size: cover;
+    background-position: center;
+    filter: blur(24px) saturate(1.15);
+    transform: scale(1.15);
+  }
+  .tile .main-img {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+  }
+  .tile .name {
+    position: absolute;
+    bottom: 6px;
+    left: 8px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    z-index: 2;
+  }
+  .big-stage {
+    flex: 1;
+    background: linear-gradient(135deg, #2a2a30, #1f1f23);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .slide {
+    width: 82%;
+    height: 82%;
+    background: white;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    padding: 40px 50px;
+    color: #1a1a2e;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+  .slide h2 {
+    font-size: 36px;
+    color: #6264a7;
+    margin-bottom: 12px;
+  }
+  .slide p { font-size: 18px; color: #555; line-height: 1.5; }
+  .slide .chart {
+    margin-top: 24px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-end;
+    height: 180px;
+  }
+  .bar {
+    flex: 1;
+    background: linear-gradient(to top, #6264a7, #8b8dd6);
+    border-radius: 6px 6px 0 0;
+  }
+  .toolbar {
+    height: 64px;
+    background: #0f0f0f;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .btn {
+    height: 40px;
+    padding: 0 18px;
+    background: #1f1f1f;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #ccc;
+  }
+  .btn.leave { background: #c4314b; color: #fff; }
+  .caption {
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(98,100,167,0.95);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 999px;
+    font-size: 16px;
+    font-weight: 600;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    letter-spacing: 0.3px;
+  }
+
+  /* Tile backgrounds */
+  .bg1 { background-image: linear-gradient(135deg, #ff9a8b 0%, #ff6a88 55%, #ff99ac 100%); }
+  .bg2 { background-image: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+  .bg3 { background-image: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+  .bg4 { background-image: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%); }
+  .bg5 { background-image: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%); }
+  .bg6 { background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+</style>
+</head>
+<body>
+  <div class="titlebar">
+    <div class="logo"></div>
+    <div>Microsoft Teams — Weekly Sync</div>
+  </div>
+  <div class="main">
+    <div class="sidebar">
+      <div class="nav-icon">💬</div>
+      <div class="nav-icon active">📞</div>
+      <div class="nav-icon">📅</div>
+      <div class="nav-icon">🗂</div>
+      <div class="nav-icon">⚙️</div>
+    </div>
+    <div class="stage">
+      <div class="tiles-row">
+        <div class="tile"><div class="blur bg1"></div><div class="main-img bg1"></div><span class="name">Ava</span></div>
+        <div class="tile"><div class="blur bg2"></div><div class="main-img bg2"></div><span class="name">Ben</span></div>
+        <div class="tile"><div class="blur bg3"></div><div class="main-img bg3"></div><span class="name">Chloe</span></div>
+        <div class="tile"><div class="blur bg4"></div><div class="main-img bg4"></div><span class="name">Diego</span></div>
+        <div class="tile"><div class="blur bg5"></div><div class="main-img bg5"></div><span class="name">Emma</span></div>
+        <div class="tile"><div class="blur bg6"></div><div class="main-img bg6"></div><span class="name">Felix</span></div>
+      </div>
+      <div class="big-stage">
+        <div class="slide">
+          <h2>Q2 Roadmap</h2>
+          <p>Milestones and timeline overview for the engineering team.</p>
+          <div class="chart">
+            <div class="bar" style="height:60%"></div>
+            <div class="bar" style="height:80%"></div>
+            <div class="bar" style="height:45%"></div>
+            <div class="bar" style="height:90%"></div>
+            <div class="bar" style="height:70%"></div>
+            <div class="bar" style="height:55%"></div>
+          </div>
+        </div>
+        <div class="caption">Every participant gets a unique tile</div>
+      </div>
+      <div class="toolbar">
+        <div class="btn">📷 Camera</div>
+        <div class="btn">🎤 Mic</div>
+        <div class="btn">📤 Share</div>
+        <div class="btn">✋ React</div>
+        <div class="btn leave">📞 Leave</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
