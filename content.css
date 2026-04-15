@@ -1,0 +1,21 @@
+.tts-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.tts-host {
+  position: relative;
+}
+
+.tts-hide-avatar [data-tid="persona-avatar"],
+.tts-hide-avatar [class*="personaContainer"],
+.tts-hide-avatar [class*="avatar"],
+.tts-hide-avatar [role="img"][aria-label] {
+  visibility: hidden !important;
+}

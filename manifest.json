@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "name": "Teams Tile Swapper",
+  "version": "0.1.0",
+  "description": "Replaces Microsoft Teams participant tiles (camera off) with a custom image.",
+  "permissions": ["storage"],
+  "host_permissions": [
+    "https://teams.cloud.microsoft/*",
+    "https://teams.microsoft.com/*",
+    "https://teams.live.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://teams.cloud.microsoft/*",
+        "https://teams.microsoft.com/*",
+        "https://teams.live.com/*"
+      ],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["default.svg"],
+      "matches": [
+        "https://teams.cloud.microsoft/*",
+        "https://teams.microsoft.com/*",
+        "https://teams.live.com/*"
+      ]
+    }
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "action": {
+    "default_title": "Teams Tile Swapper",
+    "default_popup": "options.html"
+  }
+}
