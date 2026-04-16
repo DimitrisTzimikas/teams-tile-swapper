@@ -91,6 +91,30 @@
     return promise;
   };
 
+  const NAME_SELECTORS = [
+    '[data-tid="roster-entry-participant-name"]',
+    '[data-tid="participant-name"]',
+    '[data-tid="video-avatar-name"]',
+    '[data-tid="call-roster-name"]',
+    '[class*="participantName"]',
+    '[class*="displayName"]',
+  ];
+
+  const getTileName = (tile) => {
+    for (let i = 0; i < NAME_SELECTORS.length; i++) {
+      const el = tile.querySelector(NAME_SELECTORS[i]);
+      const t = el && el.textContent && el.textContent.trim();
+      if (t) return t;
+    }
+    const aria = tile.getAttribute("aria-label");
+    if (aria) {
+      const cleaned = aria.split(",")[0].trim();
+      if (cleaned && cleaned.length < 80) return cleaned;
+    }
+    if (tile.matches(MYSELF_SELECTOR)) return "You";
+    return "";
+  };
+
   const findTiles = (root) => {
     const set = new Set();
     root.querySelectorAll(PARTICIPANT_SELECTOR).forEach((n) => set.add(n));
@@ -114,9 +138,19 @@
       blur.className = "tts-blur";
       const main = document.createElement("div");
       main.className = "tts-main";
+      const name = document.createElement("div");
+      name.className = "tts-name";
       overlay.appendChild(blur);
       overlay.appendChild(main);
+      overlay.appendChild(name);
       tile.appendChild(overlay);
+    }
+
+    const nameEl = overlay.querySelector(":scope > .tts-name");
+    if (nameEl) {
+      const displayName = getTileName(tile);
+      if (nameEl.textContent !== displayName) nameEl.textContent = displayName;
+      nameEl.style.display = displayName ? "" : "none";
     }
 
     const requestVersion = modeVersion;
